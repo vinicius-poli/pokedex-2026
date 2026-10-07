@@ -3,16 +3,16 @@
     @for (pokm of pokemon(); track pokm.id) {
       <div class="col-md-6 col-lg-2">
         <div class="card p-3 text-center">
-          <span class="fs-6 fw-medium card-title">{{ paraTitleCase(pokm.name) }}</span>
+          <span class="fs-6 fw-medium card-title">{{ pokm.displayName }}</span>
 
           <div class="d-flex justify-content-center gap-2">
-            @for (tipo of pokm.types; track tipo) {
-              <span class="badge rounded-pill text-light">{{ paraTitleCase(tipo) }}</span>
+            @for (tipo of pokm.types; track tipo.name) {
+              <span class="badge rounded-pill text-light">{{ tipo.displayName }}</span>
             }
           </div>
 
-          @if (pokm.sprite) {
-            <img [src]="pokm.sprite" [alt]="pokm.name" />
+          @if (pokm.imageUrl) {
+            <img [src]="pokm.imageUrl" [alt]="pokm.imageAlt" />
           } @else {
             <p>Imagem não disponível</p>
           }
