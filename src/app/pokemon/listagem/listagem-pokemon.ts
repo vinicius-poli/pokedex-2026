@@ -75,6 +75,7 @@ function paraCardViewModel(dto: Pokemon): PokemonCardViewModel {
 
 @Component({
   imports: [],
+  providers: [PokemonService],
   selector: 'app-listagem-pokemon',
   templateUrl: './listagem-pokemon.html',
 })
