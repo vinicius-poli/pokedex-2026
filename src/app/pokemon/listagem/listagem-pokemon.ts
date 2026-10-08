@@ -1,15 +1,12 @@
+import { map } from 'rxjs';
+
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
+
 import { PokemonService } from '../data/pokemon.service';
 import { Pokemon, PokemonTypeViewModel } from '../pokemon.model';
-import { map } from 'rxjs';
-import {
-  obterCorDeBackgroundDosTipos,
-  obterCorDoTipo,
-  paraTiposViewModel,
-  paraTitleCase,
-} from '../pokemon.util';
-import { RouterLink } from '@angular/router';
+import { obterCorDeBackgroundDosTipos, paraTiposViewModel, paraTitleCase } from '../pokemon.util';
 
 interface PokemonCardViewModel {
   readonly id: number;
@@ -43,7 +40,7 @@ function paraCardViewModel(dto: Pokemon): PokemonCardViewModel {
   templateUrl: './listagem-pokemon.html',
 })
 export class ListagemPokemon {
-  protected readonly pokemonService = inject(PokemonService);
+  private readonly pokemonService = inject(PokemonService);
 
   protected readonly pokemon = toSignal(
     this.pokemonService.listar().pipe(map((pokemon) => pokemon.map(paraCardViewModel))),

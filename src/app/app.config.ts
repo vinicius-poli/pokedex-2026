@@ -1,8 +1,8 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { provideRouter, Routes } from '@angular/router';
+
 import { POKE_API_URL } from './pokemon/data/pokemon.service';
-import { Routes } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -12,7 +12,6 @@ const routes: Routes = [
   },
   {
     path: 'pokemon',
-    // Lazy Loading
     loadComponent: () =>
       import('./pokemon/listagem/listagem-pokemon').then((component) => component.ListagemPokemon),
   },
