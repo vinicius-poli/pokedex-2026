@@ -100,7 +100,7 @@ export class DetalhesPokemon {
   protected readonly pokemon = toSignal(
     this.route.paramMap.pipe(
       map((params) => params.get('name') ?? ''),
-      switchMap((name) => this.pokemonService.buscarPorNome(name)),
+      switchMap((nome) => this.pokemonService.buscarPorNome(nome)),
       map(paraDetalhesViewModel),
     ),
   );
