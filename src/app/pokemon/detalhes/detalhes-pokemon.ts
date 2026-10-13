@@ -2,11 +2,11 @@ import { map, switchMap } from 'rxjs';
 
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { PokemonService } from '../data/pokemon.service';
 import { PokemonDetails, PokemonTypeViewModel } from '../pokemon.model';
-import { paraTiposViewModel, paraTitleCase } from '../pokemon.util';
+import { obterCorDeBackgroundDosTipos, paraTiposViewModel, paraTitleCase } from '../pokemon.util';
 
 interface PokemonAbilityViewModel {
   readonly name: string;
@@ -25,6 +25,8 @@ interface PokemonDetailsViewModel {
   readonly number: string;
   readonly name: string;
   readonly displayName: string;
+  readonly background: string;
+  readonly spriteUrl: string | null;
   readonly imageUrl: string | null;
   readonly imageAlt: string;
   readonly audioUrl: string | null;
@@ -66,18 +68,21 @@ function obterPercentualEstatistica(value: number): number {
 
 function paraDetalhesViewModel(dto: PokemonDetails): PokemonDetailsViewModel {
   const displayName = paraTitleCase(dto.name);
+  const types = paraTiposViewModel(dto.types);
 
   return {
     id: dto.id,
     number: paraNumeroPokemon(dto.id),
     name: dto.name,
     displayName: displayName,
+    background: obterCorDeBackgroundDosTipos(types),
+    spriteUrl: dto.spriteUrl,
     imageUrl: dto.imageUrl,
     imageAlt: `Imagem de ${displayName}`,
     audioUrl: dto.audioUrl,
     height: paraAlturaPokemon(dto.height),
     weight: paraPesoPokemon(dto.weight),
-    types: paraTiposViewModel(dto.types),
+    types: types,
     abilities: dto.abilities.map((name) => ({ name: name, displayName: paraTitleCase(name) })),
     stats: dto.stats.map(({ name, baseValue }) => ({
       name: name,
@@ -89,8 +94,9 @@ function paraDetalhesViewModel(dto: PokemonDetails): PokemonDetailsViewModel {
 }
 
 @Component({
-  imports: [],
+  imports: [RouterLink],
   selector: 'app-detalhes-pokemon',
+  styleUrl: './detalhes-pokemon.scss',
   templateUrl: './detalhes-pokemon.html',
 })
 export class DetalhesPokemon {

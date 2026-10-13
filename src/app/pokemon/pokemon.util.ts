@@ -41,9 +41,9 @@ export function obterCorDoTipo(tipo: string): string {
   return TYPE_COLORS[tipo] ?? DEFAULT_TYPE_COLOR;
 }
 
-export function obterCorDeBackgroundDosTipos(tipo: readonly PokemonTypeViewModel[]): string {
-  const primeiraCor = tipo[0]?.color ?? DEFAULT_TYPE_COLOR;
-  const segundaCor = tipo[1]?.color ?? primeiraCor;
+export function obterCorDeBackgroundDosTipos(tipos: readonly PokemonTypeViewModel[]): string {
+  const primeiraCor = tipos[0]?.color ?? DEFAULT_TYPE_COLOR;
+  const segundaCor = tipos[1]?.color ?? primeiraCor;
 
   return `linear-gradient(var(--bs-card-bg), var(--bs-card-bg)) padding-box, linear-gradient(135deg, ${primeiraCor} 0 50%, ${segundaCor} 50% 100%) border-box`;
 }
