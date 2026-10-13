@@ -94,8 +94,7 @@ function paraDetalhesViewModel(dto: PokemonDetails): PokemonDetailsViewModel {
   templateUrl: './detalhes-pokemon.html',
 })
 export class DetalhesPokemon {
-  // Permite acesso à dados da rota atual
-  private readonly route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute); // Permite acesso à dados da rota atual
   private readonly pokemonService = inject(PokemonService);
 
   protected readonly pokemon = toSignal(
