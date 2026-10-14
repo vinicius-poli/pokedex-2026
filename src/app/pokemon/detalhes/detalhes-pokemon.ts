@@ -1,10 +1,11 @@
 import { catchError, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { PokemonService } from '../data/pokemon.service';
+import { FavoritosService } from '../favoritos/favoritos.service';
 import { PokemonDetails, PokemonTypeViewModel } from '../pokemon.model';
 import { obterCorDeBackgroundDosTipos, paraTiposViewModel, paraTitleCase } from '../pokemon.util';
 
@@ -138,6 +139,7 @@ function paraDetalhesViewModel(
 export class DetalhesPokemon {
   private readonly route = inject(ActivatedRoute); // Permite acesso à dados da rota atual
   private readonly pokemonService = inject(PokemonService);
+  private readonly favoritosService = inject(FavoritosService);
 
   protected readonly pokemon = toSignal(
     this.route.paramMap.pipe(
@@ -153,6 +155,22 @@ export class DetalhesPokemon {
       map(({ pokemon, previous, next }) => paraDetalhesViewModel(pokemon, previous, next)),
     ),
   );
+
+  readonly estaFavoritado = computed(() =>
+    this.favoritosService.estaComoFavorito(this.pokemon()!.id),
+  );
+
+  alternarStatusFavorito(): void {
+    const pokemonSelecionado = this.pokemon();
+
+    if (!pokemonSelecionado) return;
+
+    this.favoritosService.alternar({
+      id: pokemonSelecionado.id,
+      name: pokemonSelecionado.name,
+      spriteUrl: pokemonSelecionado.spriteUrl,
+    });
+  }
 
   private buscarVizinho(id: number): Observable<PokemonDetails | null> {
     if (id < 1) {
