@@ -74,7 +74,7 @@
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
           "options": {
-            "baseHref": "https://vinicius-poli-fullstack.github.io/pokedex-2026/",
+            "baseHref": "https://vinicius-poli.github.io/pokedex-2026/",
             "name": "vinicius.poli",
             "email": "alemaumvp@hotmail.com"
           }
