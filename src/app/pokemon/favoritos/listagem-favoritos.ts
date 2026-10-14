@@ -7,6 +7,7 @@ import { FavoritosService } from './favoritos.service';
 @Component({
   imports: [RouterLink],
   selector: 'app-listagem-favoritos',
+  styleUrl: './listagem-favoritos.scss',
   templateUrl: './listagem-favoritos.html',
 })
 export class ListagemFavoritos {
